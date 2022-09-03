@@ -1,5 +1,6 @@
-fastapi
-uvicorn
 SQLAlchemy
+fastapi
+gunicorn
 pytest
 requests
+uvicorn

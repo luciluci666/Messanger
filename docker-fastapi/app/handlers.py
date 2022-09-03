@@ -21,7 +21,7 @@ def login(user_form: UserLoginForm = Body(..., embed=True), database=Depends(con
     if not user:
         user = database.query(User).filter(User.login == user_form.login).one_or_none()
     if not user or get_password_hash(user_form.password) != user.password:
-        return {'error' : 'Email/login/passwword invalid'}
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Email/login/password invalid')
 
     auth_token = AuthToken(token=str(uuid.uuid4()), user_id=user.id)
     database.add(auth_token)
@@ -31,10 +31,12 @@ def login(user_form: UserLoginForm = Body(..., embed=True), database=Depends(con
 
 @router.post('/user', name='user:create')
 def create_user(user: UserCreateForm = Body(..., embed=True), database=Depends(connect_db)):
-    exists_user = database.query(User.id).filter(or_(User.email == user.email, User.login == user.login)).one_or_none()
+    exists_user = database.query(User.id).filter(User.email == user.email).one_or_none()
     if exists_user:
-        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Email/login already exist')
-
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Email already exists')
+    exists_user = database.query(User.id).filter(User.login == user.login).one_or_none()
+    if exists_user:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail='Login already exists')
     new_user = User(
         email=user.email,
         password=get_password_hash(user.password),
