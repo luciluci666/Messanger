@@ -1,16 +1,22 @@
-# Messanger
+Messanger
+====
 
 This is Messanger Api realised by FastApi.
 
+<< Installing >>
+
+python -m setup.py install
+
+
 << Docs >>
 
-# GET  /index
-
+GET  /index
+----
 Request:
   No parameters
   
-# POST  /login
-
+POST  /login
+----
 Request:
   {
   "user_form": {
@@ -18,14 +24,14 @@ Request:
     "password": "string"
   }
 }
-# GET  /login
+GET  /login
 
 Request:
 token *
 string
 
-# POST  /user
-
+POST  /user
+----
 Request:
 {
   "user": {
@@ -37,16 +43,16 @@ Request:
   }
 }
 
-# GET  /user/contact
-
+GET  /user/contact
+----
 Request:
 token *
 string
 (query)
 
 
-# POST  /user/contact
-
+POST  /user/contact
+----
 Request:
 {
   "contact": {
@@ -55,8 +61,8 @@ Request:
   }
 }
 
-# GET  /user/contact/message
-
+GET  /user/contact/message
+----
 Request:
 token *
 string
@@ -64,8 +70,8 @@ string
 contact_id *
 string
 
-# POST  /user/contact/message
-
+POST  /user/contact/message
+----
 Request:
 
 {
