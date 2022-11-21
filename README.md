@@ -1,4 +1,4 @@
-Messanger
+Messenger
 ====
 
 This is Messanger Api realised by FastApi.
